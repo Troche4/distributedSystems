@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<data>
+
+    <title>Chemistry quiz</title>
+
+    <directions>Read each question carefully and fill out each answer. Raise your hand when you are finished.</directions>
+
+    <question type="true-false">
+        <prompt>Sodium's abbreviation is Na.</prompt>
+        <option>True</option>
+        <option>False</option>
+    </question>
+
+    <question type="multiple-choice">
+        <prompt>Which element is the lightest?</prompt>
+        <option>Hydrogen</option>
+        <option>Iron</option>
+        <option>Lithium</option>
+        <option>Silicon</option>
+    </question>
+
+    <question type="fill-in-blank">
+        <before>The three states of matter are </before>
+        <blank></blank>
+        <after>, liquid, and gas.</after>
+    </question>
+
+    <question type="matching">
+        <prompt>Match each element to its abbreviation.</prompt>
+        <set1>Na Br Cl Fe C O N</set1>
+        <set2>Chlorine Oxygen Nitrogen Iron Sodium Bromine Carbon</set2>
+    </question>
+
+    <question type="short-answer">
+        <prompt>Write down one fun fact you know about chemistry.</prompt>
+    </question>
+
+    <spam></spam>
+
+    <question>
+        <prompt>What subatomic particles can be found in the nucleus?</prompt>
+    </question>
+
+</data>
