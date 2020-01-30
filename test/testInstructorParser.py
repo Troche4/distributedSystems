@@ -1,10 +1,10 @@
 #Author: Trey Roche
-#Program designed to test XMLParser.py code
+#Program designed to test InstructorXMLParser.py code
 #Resources used: unittest framework in Python libraries (docs.python.org)
 
 from unittest import *
 
-class testParser(unittest.case):
+class testInstructorParser(unittest.case):
 
     def testUnrecognizedElement():
 
