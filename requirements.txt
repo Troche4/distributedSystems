@@ -1,1 +1,7 @@
-virtualenv-16.7.9
+virtualenv==16.7.9
+Flask==1.1.1
+Werkzeug>=0.15
+click==5.1
+itsdangerous>=0.24
+Jinja2>=2.10.1
+MarkupSafe>=0.23
