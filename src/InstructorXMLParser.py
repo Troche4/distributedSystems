@@ -1,8 +1,8 @@
-# Author: Trey Roche
-# Program designed to take in an XML file and translate it into data for output in Python.
+# Program designed to take in an XML file and translate it into quiz data for output in Python.
 # Resources used: ElementTree API in Python libraries (docs.python.org)
 
 import xml.etree.ElementTree as etree
+import objects
 import random
 
 
@@ -12,65 +12,77 @@ class InstructorXMLParser:
         self.url = url
 
     def parse(self):
-        if self.url == None:
+        url = self.url
+        if url == None:
             url = input("Enter your xml file here, including its path: ")
-        tree = etree.parse(url)  # get XMl file
+        tree = etree.parse(url)  
         root = tree.getroot()
-        q_counter = 0  # question counting variable
-        print("\n\n")
+        quiz = objects.quiz()
         for child in root:
-            if child.tag == "title":  # found a <title> tag
-                print(child.text, "\n\n")
-            elif child.tag == "directions":  # found a <directions> tag
-                print("Directions:", child.text, "\n\n")
-            elif child.tag == "question":  # found a <question> tag
-                q_counter += 1
+            if child.tag == "title":  
+                quiz.addTitle(child.text)
+            elif child.tag == "directions":  
+                quiz.addDirections(child.text)
+            elif child.tag == "question":  
                 if child.attrib.get("type") in ["short-answer", "true-false", "multiple-choice"]: # question is MC, T/F, or short answer
+                    mcQuestion = objects.MCQuestion(None, list())
+                    if len(mcQuestion.options) > 0:
+                        mcQuestion.options = list()
                     components = child.iter()
                     for element in components:
-                        if element.tag == "prompt":  # question text
-                            print(q_counter, ":", element.text, "\n")
-                        elif element.tag == "option":  # option for the user to select as an answer
-                            print(element.text)
-                    print("\n\n")
+                        if element.tag == "prompt": 
+                            mcQuestion.addPrompt(element.text)
+                        elif element.tag == "option": 
+                            mcQuestion.addOption(element.text)
+                        elif element.tag == "answer":
+                            mcQuestion.addOption(element.text)
+                            mcQuestion.addAnswer(element.text)
+                    quiz.addQuestion(mcQuestion)
                 elif child.attrib.get("type") == "fill-in-blank": # question is fill-in-the-blank
+                    FIBQuestion = objects.FillInBlankQuestion(None, None)
                     components = child.iter()
-                    combinedStr = str()  # for building one output string with the blanks embedded
                     for element in components:
-                        if element.tag in ["before", "after"]: #text for the output string
-                            combinedStr += str(element.text)
-                        elif element.tag == "blank":  # element is left blank for the user to fill in
-                            combinedStr += ("_" * 10)
-                    print(q_counter, ":", combinedStr)
-                    print("\n\n")
+                        if element.tag == "before": 
+                            FIBQuestion.addBefore(element.text)
+                        elif element.tag == "after":  
+                            FIBQuestion.addAfter(element.text)
+                        elif element.tag == "answer":
+                            FIBQuestion.addAnswer(element.text)
+                    quiz.addQuestion(FIBQuestion)
                 elif child.attrib.get("type") == "matching":  # question is matching
+                    MatchQuestion = objects.MatchingQuestion(None, None, None, None)
                     components = child.iter()
                     for element in components:
-                        if element.tag == "prompt":  # question text
-                            print(q_counter, ":", element.text, "\n")
+                        if element.tag == "prompt":  
+                            MatchQuestion.addPrompt(element.text)
                         elif element.tag == "set1":# group of elements in the left column that have to be assigned to set 2 (the keys)
                             set1 = str(element.text).split(" ")
+                            random.shuffle(set1)
+                            MatchQuestion.addSet1(set1)
                         elif element.tag == "set2":  # group of elements in the right column that have to be matched (the values)
                             set2 = str(element.text).split(" ")
-                    random.shuffle(set1)
-                    random.shuffle(set2)
-                    maxSize = max([len(set1), len(set2)])
-                    for i in range(0, maxSize):
-                        if i >= len(set1):
-                            print("\t", set2[i], "\n")
-                        elif i >= len(set2):
-                            print(set1[i], "\n")
-                        else:
-                            print(set1[i], "\t", set2[i], "\n")
-                    print("\n\n")
-                else:  # question has no type
-                    print("QUESTION", q_counter ,"TYPE NOT SPECIFIED\n")
-                    print("Question types supported: matching, fill-in-blank, true-false, multiple-choice, short-answer", "\n")
-            else:  # element is not a recognized tag
-                print("ELEMENT NOT RECOGNIZED: ", child.tag, "\n")
-        return
+                            random.shuffle(set2)
+                            MatchQuestion.addSet2(set2)
+                        elif element.tag == "answer": #group of elements that consist of the left column sorted according to the right (the answer)
+                            answer = str(element.text).split(" ")
+                            MatchQuestion.addAnswer(answer)
+                    quiz.addQuestion(MatchQuestion)
+        return quiz
 
-if __name__ == "main":
-    self.parse()
-
-test = InstructorXMLParser()
+if __name__ == "__main__":
+    test = InstructorXMLParser("src/sampleQuiz.xml")
+    quiz = test.parse()
+    print(quiz.title + "\n")
+    print(quiz.directions + "\n")
+    for question in quiz.questions:
+        if isinstance(question, objects.MCQuestion):
+            print(question.prompt)
+            for option in question.options:
+                print(option)
+        elif isinstance(question, objects.FillInBlankQuestion):
+            print(question.before + "_______" + question.after)
+        else:
+            print(question.prompt)
+            print(question.set1)
+            print(question.set2)
+        print("\n\n")

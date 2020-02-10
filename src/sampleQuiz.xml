@@ -7,13 +7,13 @@
 
     <question type="true-false">
         <prompt>Sodium's abbreviation is Na.</prompt>
-        <option>True</option>
+        <answer>True</answer>
         <option>False</option>
     </question>
 
     <question type="multiple-choice">
         <prompt>Which element is the lightest?</prompt>
-        <option>Hydrogen</option>
+        <answer>Hydrogen</answer>
         <option>Iron</option>
         <option>Lithium</option>
         <option>Silicon</option>
@@ -21,24 +21,32 @@
 
     <question type="fill-in-blank">
         <before>The three states of matter are </before>
-        <blank></blank>
         <after>, liquid, and gas.</after>
+        <answer>Solid</answer>
     </question>
 
     <question type="matching">
         <prompt>Match each element to its abbreviation.</prompt>
         <set1>Na Br Cl Fe C O N</set1>
         <set2>Chlorine Oxygen Nitrogen Iron Sodium Bromine Carbon</set2>
+        <answer>Cl O N Fe Na Br C</answer>
     </question>
 
     <question type="short-answer">
         <prompt>Write down one fun fact you know about chemistry.</prompt>
     </question>
 
-    <spam></spam>
+    <question type="fill-in-blank">
+        <before>The unit of temperature abbreviated as K refers to </before>
+        <after>.</after>
+        <answer>Kelvin</answer>
+    </question>
 
-    <question>
-        <prompt>What subatomic particles can be found in the nucleus?</prompt>
+    <question type="matching">
+        <prompt>Match each element to its abbreviation.</prompt>
+        <set1>Ti Si Li</set1>
+        <set2>Silicon Lithium Titanium</set2>
+        <answer>Si Li Ti</answer>
     </question>
 
 </data>
