@@ -11,7 +11,7 @@ def home():
 def student():
     return render_template("student.html", methods=["GET","POST"])
 
-@app.route("/instructor" methods=["GET","POST"])
+@app.route("/instructor", methods=["GET","POST"])
 def instructor():
     return render_template("instructor.html")
 
