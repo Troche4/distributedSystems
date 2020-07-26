@@ -1,10 +1,8 @@
 # distributedSystems
-
-Repo for the clicker project in COMP 339/439.
 Author: Trey Roche
 
 ### Project details:
-The project is to create a decentralized client/server system for creating and responding to quiz questions. Instructors should be able to create questions of several different types and present them along with a code to join the quiz. Students should be able to use the code to access the questions. 
+The project is to create a decentralized client/server system for creating and responding to quiz questions. Instructors should be able to create questions of several different types and present them along with a code to join the quiz. Students should be able to use the code to access the questions. This code is for phase 1 of the project, which was to model the questions and quizzes using XML and object orientation, and to begin understanding a way to implement the backend.
 
 Stack: HTML, XML, Python, Flask
 
